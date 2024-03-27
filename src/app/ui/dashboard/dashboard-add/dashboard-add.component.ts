@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -8,12 +8,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
 import { Router, RouterLink } from '@angular/router';
-import { NutritionReport } from '../../../interfaces/nutrition_report';
-import { AuthService } from '../../../auth/auth.service';
-import { DashboardService } from '../../../services/dashboard.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { formatValue } from '../../../lib/utils';
 import { Timestamp } from '@angular/fire/firestore';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '@app/auth/auth.service';
+import { NutritionReport } from '@app/interfaces/nutrition_report';
+import { formatValue } from '@app/lib/utils';
+import { DashboardService } from '@app/services/dashboard.service';
 
 @Component({
   selector: 'app-dashboard-add',

@@ -3,7 +3,7 @@ import { MatButton } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { LatestIntakeCardComponent } from './components/latestIntakeCard/latestIntakeCard.component';
-import { PreviousReportsCardComponent } from "./components/previousReportsCard/previousReportsCard.component";
+import { PreviousReportsCardComponent } from './components/previousReportsCard/previousReportsCard.component';
 
 
 @Component({

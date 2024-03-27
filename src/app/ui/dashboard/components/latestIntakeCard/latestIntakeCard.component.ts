@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { MatLabel } from '@angular/material/form-field';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { NutritionReport } from '../../../../interfaces/nutrition_report';
-import { AuthService } from '../../../../auth/auth.service';
-import { DashboardService } from '../../../../services/dashboard.service';
-import { formatValue } from '../../../../lib/utils';
+import { AuthService } from '@app/auth/auth.service';
+import { NutritionReport } from '@app/interfaces/nutrition_report';
+import { formatValue } from '@app/lib/utils';
+import { DashboardService } from '@app/services/dashboard.service';
 
 @Component({
   selector: 'app-latest-intake-card',
@@ -52,7 +52,14 @@ import { formatValue } from '../../../../lib/utils';
         </ul>
 </ng-container>
 <ng-template #elseTemplate>
-  Loading
+<div
+  class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+  role="status">
+  <span
+    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+    >Loading...</span
+  >
+</div>
 </ng-template>
   `,
   changeDetection: ChangeDetectionStrategy.Default,

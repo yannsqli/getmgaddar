@@ -6,10 +6,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../auth/auth.service';
 import { FirebaseError } from '@angular/fire/app';
 import { Router, RouterLink } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '@app/auth/auth.service';
 
 
 
@@ -26,14 +26,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     <p class="font-bebasNeue text-4xl tracking-wide uppercase">Login</p>
   </div>
       <div>
-      <mat-error *ngIf="loginForm.controls.email.hasError('incorrect') || loginForm.controls.password.hasError('incorrect')">Incorrect username or password</mat-error>
+        <div class="flex w-full justify-center">
+          <mat-error *ngIf="loginForm.controls.email.hasError('incorrect') || loginForm.controls.password.hasError('incorrect')">Incorrect username or password</mat-error>
+        </div>
       <mat-form-field class=" w-full">
         <mat-label>Email </mat-label>
         <input matInput
         required
         [formControl]="loginForm.controls.email"
         placeholder="Ex. pat@example.com"/>
-        <mat-error *ngIf="loginForm.controls.password.hasError('required')"> Email is <strong>required</strong></mat-error>
+        <mat-error *ngIf="loginForm.controls.email.hasError('required')"> Email is <strong>required</strong></mat-error>
+        <mat-error *ngIf="loginForm.controls.email.hasError('invalid')"> Email is <strong>invalid</strong></mat-error>
       </mat-form-field>
       <mat-form-field class=" w-full">
         <mat-label>Password </mat-label>
@@ -61,7 +64,7 @@ export class LoginComponent {
   authService: AuthService = inject(AuthService);
   router: Router = inject(Router);
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required,Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
   _snackBar = inject(MatSnackBar);

@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, User, authState, createUserWithEmailAndPassword, signInWithEmailAndPassword, user } from '@angular/fire/auth';
-import { Subscription } from 'rxjs/internal/Subscription';
+import { Auth, User, authState, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'

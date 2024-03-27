@@ -9,8 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import {
   MatSnackBar,
 } from '@angular/material/snack-bar';
-import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from '@app/auth/auth.service';
 
 @Component({
   standalone: true,
@@ -31,7 +31,8 @@ import { Router } from '@angular/router';
         required
         [formControl]="signUpForm.controls.email"
         placeholder="Ex. pat@example.com"/>
-        <mat-error *ngIf="signUpForm.controls.password.hasError('required')"> Email is <strong>required</strong></mat-error>
+        <mat-error *ngIf="signUpForm.controls.email.hasError('required')"> Email is <strong>required</strong></mat-error>
+        <mat-error *ngIf="signUpForm.controls.email.hasError('invalid')"> Email is <strong>invalid</strong></mat-error>
         <mat-error *ngIf="signUpForm.controls.email.hasError('already-in-use')"> Email is <strong>already used</strong></mat-error>
       </mat-form-field>
       <mat-form-field class=" w-full">
@@ -66,7 +67,7 @@ export class SignupComponent {
   authService: AuthService = inject(AuthService);
   router: Router = inject(Router);
   signUpForm = new FormGroup({
-    email: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.min(6)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.min(6)]),
   });

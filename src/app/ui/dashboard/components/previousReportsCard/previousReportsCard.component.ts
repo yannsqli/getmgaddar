@@ -5,11 +5,11 @@ import { MatLabel } from '@angular/material/form-field';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { formatValue } from '../../../../lib/utils';
 import * as d3 from "d3";
-import { NutritionReport } from '../../../../interfaces/nutrition_report';
-import { AuthService } from '../../../../auth/auth.service';
-import { DashboardService } from '../../../../services/dashboard.service';
+import { AuthService } from '@app/auth/auth.service';
+import { NutritionReport } from '@app/interfaces/nutrition_report';
+import { DashboardService } from '@app/services/dashboard.service';
+import { formatValue } from '@app/lib/utils';
 
 @Component({
   selector: 'app-previous-reports-card',
@@ -65,7 +65,14 @@ import { DashboardService } from '../../../../services/dashboard.service';
           </table>
 </ng-container>
 <ng-template #elseTemplate>
-  Loading
+<div
+  class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+  role="status">
+  <span
+    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+    >Loading...</span
+  >
+</div>
 </ng-template>
   `,
   changeDetection: ChangeDetectionStrategy.Default,
