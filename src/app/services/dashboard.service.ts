@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, addDoc, collection, collectionData } from '@angular/fire/firestore';
-import { NutritionReport } from './nutrition_report';
+import { NutritionReport } from '../interfaces/nutrition_report';
 import { Observable } from 'rxjs';
 
 @Injectable({

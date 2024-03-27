@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { FirebaseError } from '@angular/fire/app';
 import { Router, RouterLink } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -18,13 +18,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: true,
   imports: [CommonModule, RouterLink, ReactiveFormsModule, MatFormFieldModule,
     MatInputModule, MatCardModule, MatButtonModule, MatTooltipModule],
-  template: `<div class="flex justify-center items-center h-screen">
-    <form class="w-full max-w-xs" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <mat-card>
-    <mat-card-header>
-    <mat-card-title>Login</mat-card-title>
-  </mat-card-header>
-      <mat-card-content>
+  template: `
+    <section class="flex w-full h-full justify-center items-center ">
+  <form class="w-full md:w-[40%] bg-slate-50" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <section class="p-4 border rounded space-y-4">
+    <div class="flex w-full justify-center">
+    <p class="font-bebasNeue text-4xl tracking-wide uppercase">Login</p>
+  </div>
+      <div>
       <mat-error *ngIf="loginForm.controls.email.hasError('incorrect') || loginForm.controls.password.hasError('incorrect')">Incorrect username or password</mat-error>
       <mat-form-field class=" w-full">
         <mat-label>Email </mat-label>
@@ -42,17 +43,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
           />
           <mat-error *ngIf="loginForm.controls.password.hasError('required')"> Password is <strong>required</strong></mat-error>
       </mat-form-field>
-      <button matTooltip="Too bad!">Forgot your password ?</button>
-      </mat-card-content>
-      <mat-card-actions class=" justify-center">
+      <button class="underline" matTooltip="Too bad!">Forgot your password ?</button>
+  </div>
+      <div class="flex w-full justify-center">
         <button mat-raised-button color="primary" class=" w-[80%]" type="submit" [disabled]="!loginForm.valid">Login</button>
-      </mat-card-actions>
-      <mat-card-footer class="flex w-full items-center justify-center pb-2">
-        <a [routerLink]="['/auth/signup']">New to the site? Sign up</a>
-      </mat-card-footer>
-    </mat-card>
+  </div>
+      <div class="flex w-full items-center justify-center pb-2">
+        <a class="underline" [routerLink]="['/auth/signup']">New to the site? Sign up</a>
+  </div>
+    </section>
     </form>
-  </div>`,
+    </section>
+  `,
 })
 
 export class LoginComponent {

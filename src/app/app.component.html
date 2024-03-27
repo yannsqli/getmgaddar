@@ -1,18 +1,6 @@
-<nav>
-    <mat-toolbar class="justify-between">
-        <a [routerLink]="[ '/']">{{title}}</a>
-        <div *ngIf="authService.currentUser">
-            <button mat-button [matMenuTriggerFor]="menu">
-                {{authService.currentUser.email}}
-            </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="signOut()">Sign Out</button>
-            </mat-menu>
-            <button mat-button disabled>
-                <mat-icon fontIcon="account_circle"></mat-icon>
-            </button>
-        </div>
-    </mat-toolbar>
-</nav>
-
-<router-outlet />
+<main class="flex flex-col min-h-screen h-fit bg-green-100 ">
+    <app-navbar></app-navbar>
+    <section class="h-full justify-center items-center">
+        <router-outlet />
+    </section>
+</main>

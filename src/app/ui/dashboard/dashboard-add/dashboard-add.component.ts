@@ -8,11 +8,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
 import { Router, RouterLink } from '@angular/router';
-import { NutritionReport } from '../nutrition_report';
+import { NutritionReport } from '../../../interfaces/nutrition_report';
 import { AuthService } from '../../../auth/auth.service';
-import { addDoc } from '@angular/fire/firestore';
-import { DashboardService } from '../dashboard.service';
+import { DashboardService } from '../../../services/dashboard.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { formatValue } from '../../../lib/utils';
+import { Timestamp } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-dashboard-add',
@@ -21,14 +22,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     CommonModule, RouterLink, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule,
     MatCardModule, MatButtonModule, MatIconModule, MatSliderModule
   ],
-  template: `<div class="flex justify-center items-center h-screen">
-  <form class="w-full max-w-md" [formGroup]="nutritionForm" (ngSubmit)="onSubmit()">
-  <mat-card>
-  <mat-card-header>
-  <mat-card-title>Add Intake</mat-card-title>
-</mat-card-header>
-    <mat-card-content>
-      <span class="flex justify-evenly">
+  template: `
+  <section class="flex w-full h-full justify-center items-center ">
+  <form class="w-full md:w-[50%] bg-slate-50" [formGroup]="nutritionForm" (ngSubmit)="onSubmit()">
+  <section class="p-4 border rounded">
+  <div class="flex w-full justify-center">
+  <p class="font-bebasNeue text-4xl tracking-wide uppercase">Add Intake</p>
+</div>
+    <div>
+      <span class="flex justify-center space-x-4">
       <mat-form-field class=" w-full max-w-xs justify-center align-middle">
         <input matInput
         type="number"
@@ -44,51 +46,51 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     <ul>
       <li class="flex flex-col">
       <mat-label>Protein </mat-label>
-      <span class="flex w-full align-middle justify-center">
-        <mat-slider min="0" max="1" step="0.1" class="flex-1">
+      <span class="flex w-full">
+        <mat-slider min="0" max="1" step="0.1" class="basis-4/5">
           <input matSliderThumb [formControl]="nutritionForm.controls.protein">
         </mat-slider>
-        <p><strong>{{nutritionForm. value.protein!*nutritionForm.value.calories!}}</strong> kcal</p>
+        <p><strong>{{formatValue(nutritionForm. value.protein!*nutritionForm.value.calories!)}}</strong> kcal</p>
       </span>
       </li>
       <li class="flex flex-col">
         <mat-label>Carbohydrates</mat-label>
         <span class="flex w-full">
-          <mat-slider min="0" max="1" step="0.1" class="flex-1">
+          <mat-slider min="0" max="1" step="0.1" class="basis-4/5">
             <input matSliderThumb [formControl]="nutritionForm.controls.carbohydrates">
           </mat-slider>
-          <p><strong>{{nutritionForm. value.carbohydrates!*nutritionForm.value.calories!}}</strong> kcal</p>
+          <p><strong>{{formatValue(nutritionForm. value.carbohydrates!*nutritionForm.value.calories!)}}</strong> kcal</p>
         </span>
       </li>
       <li class="flex flex-col">
         <mat-label>Fats</mat-label>
         <span class="flex w-full">
-          <mat-slider min="0" max="1" step="0.1" class="flex-1">
+          <mat-slider min="0" max="1" step="0.1" class="basis-4/5">
             <input matSliderThumb [formControl]="nutritionForm.controls.fats">
           </mat-slider>
-          <p><strong>{{nutritionForm. value.fats!*nutritionForm.value.calories!}}</strong> kcal</p>
+          <p><strong>{{formatValue(nutritionForm. value.fats!*nutritionForm.value.calories!)}}</strong> kcal</p>
         </span>
       </li>
       <li class="flex flex-col">
         <mat-label>Fiber</mat-label>
         <span class="flex w-full">
-          <mat-slider min="0" max="1" step="0.1" class="flex-1">
+          <mat-slider min="0" max="1" step="0.1" class="basis-4/5">
             <input matSliderThumb [formControl]="nutritionForm.controls.fiber">
           </mat-slider>
-          <p><strong>{{nutritionForm.value.fiber!*nutritionForm.value.calories!}}</strong> kcal</p>
+          <p><strong>{{formatValue(nutritionForm.value.fiber!*nutritionForm.value.calories!)}}</strong> kcal</p>
         </span>
       </li>
     </ul>
-      
-    </mat-card-content>
-    <mat-card-actions class=" justify-center">
+</div>
+    <div class="flex w-full justify-center">
       <button mat-raised-button color="primary" class=" w-[80%]" type="submit" [disabled]="!nutritionForm.valid || nutritionForm.value.calories == 0"><mat-icon>add</mat-icon> Add</button>
-    </mat-card-actions>
-  </mat-card>
+</div>
+  </section>
   </form>
-</div>`,
-  styleUrl: './dashboard-add.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  </section>
+  
+`,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class DashboardAddComponent {
   router: Router = inject(Router);
@@ -102,11 +104,14 @@ export class DashboardAddComponent {
   dashboardService: DashboardService = inject(DashboardService)
   authService: AuthService = inject(AuthService)
   _snackBar = inject(MatSnackBar);
+  formatValue = formatValue;
+
   onSubmit() {
     if (this.nutritionForm.value.calories == 0)
       return this.nutritionForm.controls.calories.setErrors({ 'required': true })
     this.dashboardService.addReport(<NutritionReport>{
-      userUuid: this.authService.currentUser!.uid, reportDate: new Date(),
+      userUuid: this.authService.currentUser!.uid,
+      reportDate: Timestamp.now(),
       calories: this.nutritionForm.value.calories!,
       protein: this.nutritionForm.value.protein! * this.nutritionForm.value.calories!,
       carbohydrates: this.nutritionForm.value.carbohydrates! * this.nutritionForm.value.calories!,

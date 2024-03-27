@@ -1,6 +1,8 @@
+import { Timestamp } from "@angular/fire/firestore"
+
 export interface NutritionReport {
     userUuid: string
-    reportDate: Date
+    reportDate: Timestamp
     calories: number
     carbohydrates: number
     fats: number
