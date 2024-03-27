@@ -95,7 +95,11 @@ export class PreviousReportsCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.dashboardService.getReports().subscribe((nutritionReports: NutritionReport[]) => {
-      let thisNutritionReports = nutritionReports.filter(nutritionReport => nutritionReport.userUuid == this.authService.currentUser!.uid)
+      let thisNutritionReports = nutritionReports.filter(nutritionReport => {
+        if (this.authService.currentUser)
+          return (nutritionReport.userUuid == this.authService.currentUser.uid)
+        else return false
+      })
       this.dataSource = thisNutritionReports
       this.data = [
         {

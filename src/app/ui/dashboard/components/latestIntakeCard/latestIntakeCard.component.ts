@@ -72,7 +72,11 @@ export class LatestIntakeCardComponent implements OnInit {
   authService: AuthService = inject(AuthService)
   ngOnInit(): void {
     this.dashboardService.getReports().subscribe((nutritionReports: NutritionReport[]) => {
-      let thisNutritionReports = nutritionReports.filter(nutritionReport => nutritionReport.userUuid == this.authService.currentUser!.uid)
+      let thisNutritionReports = nutritionReports.filter(nutritionReport => {
+        if (this.authService.currentUser)
+          return (nutritionReport.userUuid == this.authService.currentUser.uid)
+        else return false
+      })
       this.nutritionReport = thisNutritionReports[thisNutritionReports.length - 1]
     })
   }
