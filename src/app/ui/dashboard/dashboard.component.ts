@@ -15,7 +15,7 @@ import { PreviousReportsCardComponent } from './components/previousReportsCard/p
       <p class="font-bebasNeue text-4xl tracking-wide uppercase">Nutrition Dashboard</p>
       <button mat-raised-button color="primary" [routerLink]="['add']"><mat-icon>add</mat-icon> Add Intake</button>
   </div>
-    <div class="flex flex-col md:flex-row w-full space-x-4 p-4">
+    <div class="flex flex-col md:flex-row w-full md:space-x-4 p-4">
       <span class="basis-1/2 max-h-fit border rounded p-4 bg-slate-50">
         <app-latest-intake-card/>
 </span>

@@ -85,6 +85,7 @@ export class SignupComponent {
       this.router.navigate(['/']);
       return;
     }).catch((err: FirebaseError) => {
+      if (!err.code) return this.router.navigate(['/']);
       switch (err.code) {
         case 'auth/invalid-credential':
           this.signUpForm.controls.email.setErrors({ 'incorrect': true })
@@ -100,6 +101,7 @@ export class SignupComponent {
           this._snackBar.open(`There has been an error in the Sign Up process. (${err.code}) ${err.message}`, 'Dismiss');
           break;
       }
+      return
     }
     )
   }

@@ -43,19 +43,19 @@ import { formatValue } from '@app/lib/utils';
               <th mat-header-cell *matHeaderCellDef> Calories </th>
               <td mat-cell *matCellDef="let row"> {{formatValue(row.calories)}} </td>
             </ng-container>
-            <ng-container matColumnDef="protein">
+            <ng-container matColumnDef="protein" class="hidden md:block">
               <th mat-header-cell *matHeaderCellDef> Protein </th>
               <td mat-cell *matCellDef="let row"> {{formatValue(row.protein)}} </td>
             </ng-container>
-            <ng-container matColumnDef="carbohydrates">
+            <ng-container matColumnDef="carbohydrates" class="hidden md:block">
               <th mat-header-cell *matHeaderCellDef> Carbohydrates </th>
               <td mat-cell *matCellDef="let row"> {{formatValue(row.carbohydrates)}} </td>
             </ng-container>
-            <ng-container matColumnDef="fats">
+            <ng-container matColumnDef="fats" class="hidden md:block">
               <th mat-header-cell *matHeaderCellDef> Fats </th>
               <td mat-cell *matCellDef="let row"> {{formatValue(row.fats)}} </td>
             </ng-container>
-            <ng-container matColumnDef="fiber">
+            <ng-container matColumnDef="fiber" class="hidden md:block">
               <th mat-header-cell *matHeaderCellDef> Fiber </th>
               <td mat-cell *matCellDef="let row"> {{formatValue(row.fiber)}} </td>
             </ng-container>
@@ -95,12 +95,12 @@ export class PreviousReportsCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.dashboardService.getReports().subscribe((nutritionReports: NutritionReport[]) => {
-      let thisNutritionReports = nutritionReports.filter(nutritionReport => {
+      let nutritionReportsUidOnly = nutritionReports.filter(nutritionReport => {
         if (this.authService.currentUser)
           return (nutritionReport.userUuid == this.authService.currentUser.uid)
         else return false
       })
-      this.dataSource = thisNutritionReports
+      this.dataSource = nutritionReportsUidOnly
       this.data = [
         {
           name: "Calories",
