@@ -19,6 +19,10 @@ import { AuthService } from '@app/auth/auth.service';
   imports: [CommonModule, RouterLink, ReactiveFormsModule, MatFormFieldModule,
     MatInputModule, MatCardModule, MatButtonModule, MatTooltipModule],
   template: `
+  <div class="text-center">
+    <p class="font-passionOne text-4xl uppercase">Get swol, get good, get mgaddar</p>
+  </div>
+
     <section class="flex w-full h-full justify-center items-center ">
   <form class="w-full md:w-[40%] bg-slate-50" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <section class="p-4 border rounded space-y-4">
@@ -64,7 +68,7 @@ export class LoginComponent {
   authService: AuthService = inject(AuthService);
   router: Router = inject(Router);
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required,Validators.email]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
   _snackBar = inject(MatSnackBar);
